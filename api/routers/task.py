@@ -31,3 +31,8 @@ async def update_task(task_id: int, task_body: task_schema.TaskCreate):
 @router.delete("/tasks/{task_id}", response_model=None)
 async def delete_task(task_id: int):
     return
+
+
+@router.get("/tasks", response_model=List[task_schema.Task])
+async def list_tasks(db: AsyncSession = Depends(get_db)):
+    return await task_crud.get_tasks_with_done(db)
