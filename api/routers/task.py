@@ -60,3 +60,8 @@ async def delete_task(task_id: int, db: AsyncSession = Depends(get_db)):
 @router.get("/calk_pow", response_model=task_schema.Pow)
 async def calc_pow():
     return task_schema.Pow(input=2, ans=2**2)
+
+
+@router.get("/deadline")
+async def deadline():
+    pass

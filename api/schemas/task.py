@@ -26,3 +26,7 @@ class TaskCreateResponse(TaskCreate):
 class Pow(BaseModel):
     input: int
     ans: int
+
+
+class Deadline(TaskBase):
+    pass
