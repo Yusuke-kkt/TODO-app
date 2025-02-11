@@ -23,35 +23,9 @@ class TaskCreateResponse(TaskCreate):
         orm_mode = True
 
 
-
-
-
-
-
-
-
-
-
-
-
 class Pow(BaseModel):
     input: int
     ans: int
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
