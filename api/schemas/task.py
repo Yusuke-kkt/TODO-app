@@ -7,6 +7,7 @@ class Task(BaseModel):
     title: Optional[str] = Field(None, example="クリーニングを取りに行く")
     done: bool = Field(False, description="完了フラグ")
 
+
 class TaskBase(BaseModel):
     title: Optional[str] = Field(None, example="クリーニングを取りに行く")
 
@@ -20,3 +21,8 @@ class TaskCreateResponse(TaskCreate):
 
     class Config:
         orm_mode = True
+
+
+class Pow(BaseModel):
+    input: int
+    ans: int
