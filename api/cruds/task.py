@@ -16,17 +16,19 @@ async def create_task(
 
 
 from typing import List, Tuple
+from datetime import date
 
 from sqlalchemy import select
 from sqlalchemy.engine import Result
 
 
-async def get_tasks_with_done(db: AsyncSession) -> List[Tuple[int, str, bool]]:
+async def get_tasks_with_done(db: AsyncSession) -> List[Tuple[int, str, bool, date]]:
     result: Result = await (
         db.execute(
             select(
                 task_model.Task.id,
                 task_model.Task.title,
+                task_model.Task.deadline,
                 task_model.Done.id.isnot(None).label("done"),
             ).outerjoin(task_model.Done)
         )
@@ -59,3 +61,18 @@ async def update_task(
 async def delete_task(db: AsyncSession, original: task_model.Task) -> None:
     await db.delete(original)
     await db.commit()
+
+
+
+async def deadline_today(db: AsyncSession) -> List[Tuple[int, str, bool, date]]:
+    result: Result = await (
+        db.execute(
+            select(
+                task_model.Task.id,
+                task_model.Task.title,
+                task_model.Task.deadline,
+                task_model.Done.id.isnot(None).label("done"),
+            ).outerjoin(task_model.Task)
+        )
+    )
+    return AsyncSession.query(task_model.Task).filter(task_model.Task.deadline == date.today())

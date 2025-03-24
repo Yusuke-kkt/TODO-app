@@ -1,15 +1,13 @@
 from typing import Optional
 
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, Field
 
-class Task(BaseModel):
-    id: int
-    title: Optional[str] = Field(None, example="クリーニングを取りに行く")
-    done: bool = Field(False, description="完了フラグ")
+from datetime import date
 
 
 class TaskBase(BaseModel):
     title: Optional[str] = Field(None, example="クリーニングを取りに行く")
+    deadline: Optional[int] = Field(None, ecample="20000701")
 
 
 class TaskCreate(TaskBase):
@@ -23,11 +21,10 @@ class TaskCreateResponse(TaskCreate):
         orm_mode = True
 
 
-class Pow(BaseModel):
-    input: int
-    ans: int
+class Task(TaskBase):
+    id: int
+    done: bool = Field(False, description="完了フラグ")
 
+    class Config:
+        orm_mode = True
 
-
-class Deadline(TaskBase):
-    pass
